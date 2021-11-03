@@ -1,0 +1,9 @@
+CREATE TABLE Postac(ID INT PRIMARY KEY NOT NULL, Imie VARCHAR(40), Rodzaj ENUM('wiking','ptak','kobieta'), DataUr DATE, Wiek INT);
+INSERT INTO Postac(ID,Imie,Rodzaj,DataUr,Wiek) VALUES(1,'Bjorn','wiking','2003-10-20',19);
+INSERT INTO Postac(ID,Imie,Rodzaj,DataUr,Wiek) VALUES(2,'Drozd','ptak','1990-10-20',31);
+INSERT INTO Postac(ID,Imie,Rodzaj,DataUr,Wiek) VALUES(3,'Tesciowa','kobieta','1890-10-20',131);
+UPDATE Postac SET Wiek = 88 WHERE Imie = 'Tesciowa';
+
+
+
+

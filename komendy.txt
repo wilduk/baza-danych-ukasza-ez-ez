@@ -3,7 +3,28 @@ INSERT INTO Postac(ID,Imie,Rodzaj,DataUr,Wiek) VALUES(1,'Bjorn','wiking','2003-1
 INSERT INTO Postac(ID,Imie,Rodzaj,DataUr,Wiek) VALUES(2,'Drozd','ptak','1990-10-20',31);
 INSERT INTO Postac(ID,Imie,Rodzaj,DataUr,Wiek) VALUES(3,'Tesciowa','kobieta','1890-10-20',131);
 UPDATE Postac SET Wiek = 88 WHERE Imie = 'Tesciowa';
-
-
-
-
+CREATE TABLE Walizka(ID INT PRIMARY KEY AUTO_INCREMENT, Pojemnosc INT, Kolor ENUM('rozowy','czerwony','teczowy','zolty'), ID_Wlasciciela INT, FOREIGN KEY (ID_Wlasciciela) REFERENCES Postac(ID));
+ALTER TABLE Walizka ADD DEFAULT 'rozowy' FOR Kolor;
+INSERT INTO Walizka(Pojemnosc,Kolor,ID_Wlasciciela) VALUES(20,'czerwony',1);
+INSERT INTO Walizka(Pojemnosc,Kolor,ID_Wlasciciela) VALUES(35,'rozowy',3);
+CREATE TABLE Izba(Adres VARCHAR(50), NAZWA VARCHAR (50), metraz INT, IdWlasciciela INT, FOREIGN KEY (IdWlasciciela) REFERENCES Postac(ID),PRIMARY KEY (Adres, Nazwa));
+ALTER TABLE Izba ADD Kolor varchar(20) DEFAULT ('czarny');
+INSERT INTO Izba(Nazwa,Adres,Metraz,Kolor,IdWlasciciela) Values ('Spizarnia','Kamien na gorce',150,'czerwony',5);
+CREATE TABLE Przetwory(ID INT PRIMARY KEY, RokProdukcji YEAR DEFAULT '1954',IdWykonawcy INT, Zawartosc VARCHAR(100),Dodatek VARCHAR(100) DEFAULT 'papryczka chilli', IdKonsumenta INT, FOREIGN KEY (IdWykonawcy) REFERENCES Postac(ID), FOREIGN KEY (IdKonsumenta) REFERENCES Postac(ID));
+INSERT INTO Przetwory(ID,IdWykonawcy,Zawartosc,IdKonsumenta) VALUES(1,1,'Bigos',1);
+INSERT INTO Postac(ID,Imie,Rodzaj,DataUr,Wiek) VALUES (4,'Kuba', 'wiking','1990-01-01',31);
+INSERT INTO Postac(ID,Imie,Rodzaj,DataUr,Wiek) VALUES (5,'Andrzej', 'wiking','1990-01-01',31);
+INSERT INTO Postac(ID,Imie,Rodzaj,DataUr,Wiek) VALUES (6,'Lukasz', 'wiking','1990-01-01',31);
+INSERT INTO Postac(ID,Imie,Rodzaj,DataUr,Wiek) VALUES (7,'Kamil', 'wiking','1990-01-01',31);
+INSERT INTO Postac(ID,Imie,Rodzaj,DataUr,Wiek) VALUES (8,'Eivor', 'wiking','1990-01-01',31);
+CREATE TABLE Statek(Nazwa VARCHAR(50) PRIMARY KEY, Rodzaj ENUM('plywajacy','zatopiony'),DataWodowania DATE,Ladownosc INT);
+INSERT INTO Statek(Nazwa,Rodzaj,DataWodowania,Ladownosc) VALUES ('Maria','plywajacy','2021-11-02',10);
+INSERT INTO Statek(Nazwa,Rodzaj,DataWodowania,Ladownosc) VALUES ('Syrena','zatopiony','2021-11-02',5);
+ALTER TABLE Postac ADD Funkcja varchar(50);
+UPDATE Postac SET Funkcja = 'kapitan' WHERE Imie = 'Bjorn';
+ALTER TABLE Postac ADD Statek varchar(50);
+ALTER TABLE Postac ADD FOREIGN KEY (Statek) REFERENCES Statek(Nazwa);
+UPDATE Postac SET Statek = 'Maria' WHERE Rodzaj = 'wiking';
+UPDATE Postac SET Statek = 'Maria' WHERE Imie = 'Drozd';
+DELETE FROM Izba WHERE Nazwa = 'spizarnia';
+DROP TABLE Izba;

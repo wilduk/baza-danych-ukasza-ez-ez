@@ -84,3 +84,16 @@ SELECT nazwa,waga*ilosc FROM Zasob WHERE YEAR(dataPozyskania) BETWEEN 2000 AND 2
 SELECT nazwa,waga*ilosc*0.7 AS 'Netto', waga*ilosc*0.3 AS 'Odpady' FROM Zasob WHERE rodzaj = 'jedzenie';
 SELECT * FROM Zasob WHERE rodzaj IS NULL;
 SELECT DISTINCT nazwa FROM Zasob WHERE nazwa LIKE 'ba%' or nazwa LIKE '%os';
+
+select Sum(waga)/Count(*) as 'srednia waga' from kreatura where rodzaj = 'wiking';
+select rodzaj,Sum(waga)/Count(*) as 'srednia waga', Count(*) from kreatura group by rodzaj;
+select rodzaj,Sum(2021-year(dataUr))/Count(*) as 'sredni wiek' from kreatura group by rodzaj;
+select rodzaj,Sum(waga) as 'suma wagi' from zasob group by rodzaj;
+select rodzaj,Sum(waga)/Count(*) as 'srednia wag' from zasob group by rodzaj having Sum(waga)>10 and Count(*)>4;
+select rodzaj,Count(Distinct(nazwa)) as 'unikalne nazwy' from zasob group by rodzaj having Count(*)>1;
+select kreatura.idKreatury, sum(ekwipunek.ilosc) from ekwipunek inner join kreatura on ekwipunek.idKreatury = kreatura.idKreatury group by kreatura.idKreatury;
+select kreatura.idKreatury, zasob.nazwa from ekwipunek inner join kreatura on ekwipunek.idKreatury = kreatura.idKreatury left join zasob on ekwipunek.idZasobu = zasob.idZasobu;
+select kreatura.idKreatury from kreatura left join ekwipunek on kreatura.idKreatury = ekwipunek.idKreatury where ekwipunek.idKreatury is null;
+select kreatura.nazwa, zasob.nazwa from kreatura inner join ekwipunek on kreatura.idKreatury = ekwipunek.idKreatury inner join zasob on zasob.idZasobu = ekwipunek.idZasobu where kreatura.dataUr between '1600-01-01' and '1700-01-01' and kreatura.rodzaj = 'wiking';
+select kreatura.nazwa from kreatura inner join ekwipunek on kreatura.idKreatury = ekwipunek.idKreatury inner join zasob on zasob.idZasobu = ekwipunek.idZasobu where zasob.rodzaj = 'jedzenie' order by kreatura.dataUr asc limit 5;
+select t1.nazwa,t2.nazwa from kreatura t1, kreatura t2 where t1.idKreatury = t2.idKreatury+5;
